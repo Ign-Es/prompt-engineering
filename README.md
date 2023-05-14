@@ -33,3 +33,45 @@ The model can "Hallucinate" when you give them a task that is plausible but is n
 Generating a succesful prompt is an iterative process. 
 ![Iterative Process](images/iterative_process.png)
 
+## Summarizing 
+You can summarize text limiting the amount of words, sentences,etc by using a prompt such as:
+```python
+prompt = f"""
+Your task is to generate a short summary of a product \
+review from an ecommerce site. 
+
+Summarize the review below, delimited by triple 
+backticks, in at most 30 words. 
+
+Review: ```{prod_review}```
+"""
+```
+
+You also can skew the summary to relevant informantion by using a prompt such as:
+```python
+prompt = f"""
+Your task is to generate a short summary of a product \
+review from an ecommerce site to give feedback to the \
+Shipping deparmtment. 
+
+Summarize the review below, delimited by triple 
+backticks, in at most 30 words, and focusing on any aspects \
+that mention shipping and delivery of the product. 
+
+Review: ```{prod_review}```
+"""
+```
+Or only extract the relevant information from the text by using a prompt such as:
+```python
+prompt = f"""
+Your task is to extract relevant information from \ 
+a product review from an ecommerce site to give \
+feedback to the Shipping department. 
+
+From the review below, delimited by triple quotes \
+extract the information relevant to shipping and \ 
+delivery. Limit to 30 words. 
+
+Review: ```{prod_review}```
+"""
+```
