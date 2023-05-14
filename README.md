@@ -28,3 +28,8 @@ Treat those models as a very intelligent person, but not a mind reader. If the o
 
 ### Limitations
 The model can "Hallucinate" when you give them a task that is plausible but is not actually "real". For example when you ask it to describe a fake product from real company.
+
+## Iterative Process 
+Generating a succesful prompt is an iterative process. 
+![Iterative Process](images/iterative_process.png)
+
