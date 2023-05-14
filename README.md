@@ -33,7 +33,8 @@ The model can "Hallucinate" when you give them a task that is plausible but is n
 Generating a succesful prompt is an iterative process. 
 ![Iterative Process](images/iterative_process.png)
 
-## Summarizing 
+## Use Examples
+### Summarizing 
 You can summarize text limiting the amount of words, sentences,etc by using a prompt such as:
 ```python
 prompt = f"""
@@ -75,3 +76,113 @@ delivery. Limit to 30 words.
 Review: ```{prod_review}```
 """
 ```
+### Inferring
+You can use prompts to get sentiment analysis, such as:
+```python
+prompt = f"""
+What is the sentiment of the following product review, 
+which is delimited with triple backticks?
+
+Review text: '''{lamp_review}'''
+"""
+```
+
+Or to identify emotions in the text, with prompts as:
+```python
+prompt = f"""
+Identify a list of emotions that the writer of the \
+following review is expressing. Include no more than \
+five items in the list. Format your answer as a list of \
+lower-case words separated by commas.
+
+Review text: '''{lamp_review}'''
+"""
+```
+
+To achieve the same results with supervised learning would take a lot of effort, yet this can be achieved easily using ChatGPT
+
+You can also mix multiple tasks such as extracting the product's name and company's name, at the same time as getting sentiment analysis and costumer's emotions, with a prompt such as:
+```python
+prompt = f"""
+Identify the following items from the review text: 
+- Sentiment (positive or negative)
+- Is the reviewer expressing anger? (true or false)
+- Item purchased by reviewer
+- Company that made the item
+
+The review is delimited with triple backticks. \
+Format your response as a JSON object with \
+"Sentiment", "Anger", "Item" and "Brand" as the keys.
+If the information isn't present, use "unknown" \
+as the value.
+Make your response as short as possible.
+Format the Anger value as a boolean.
+
+Review text: '''{lamp_review}'''
+"""
+```
+You can get creative with those capabilites to create something such as news alert for certain topics, with a prompt as:
+```python
+prompt = f"""
+Determine whether each item in the following list of \
+topics is a topic in the text below, which
+is delimited with triple backticks.
+
+Give your answer as list with 0 or 1 for each topic.\
+
+List of topics: {", ".join(topic_list)}
+
+Text sample: '''{story}'''
+"""
+```
+
+### Transforming
+LLMs are very capable of performing text transformation tasks such as language translation, spelling and grammar checking, tone adjustment, and format conversion.
+
+You can create an universal translator using the LLMs capabilities to detect text language and to translate, with a prompt such as:
+for issue in user_messages:
+```python
+    prompt = f"Tell me what language this is: ```{issue}```"
+    lang = get_completion(prompt)
+    print(f"Original message ({lang}): {issue}")
+
+    prompt = f"""
+    Translate the following  text to English \
+    and Korean: ```{issue}```
+    """
+    response = get_completion(prompt)
+    print(response, "\n")
+```
+
+You can change the tone of your text, with prompts as:
+```python
+prompt = f"""
+Translate the following from slang to a business letter: 
+'Dude, This is Joe, check out this spec on this standing lamp.'
+"""
+```
+Or grammar check and follow a style guide:
+```python
+prompt = f"""
+proofread and correct this review. Make it more compelling. 
+Ensure it follows APA style guide and targets an advanced reader. 
+Output in markdown format.
+Text: ```{text}```
+"""
+```
+Transform between formats:
+```python
+data_json = { "resturant employees" :[ 
+    {"name":"Shyam", "email":"shyamjaiswal@gmail.com"},
+    {"name":"Bob", "email":"bob32@gmail.com"},
+    {"name":"Jai", "email":"jai87@gmail.com"}
+]}
+
+prompt = f"""
+Translate the following python dictionary from JSON to an HTML \
+table with column headers and title: {data_json}
+"""
+```
+### Expanding
+
+### Chatbot
